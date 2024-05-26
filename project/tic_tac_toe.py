@@ -15,9 +15,12 @@ for i in range(0, 3):
     for j in range(0, 3):
         available_choices.append((i, j))
 
+# Check win
+win = None
+
 # While condition as a stopping criteria
 played = 0
-while played <= 9:
+while played <= 9 and win is None:
 
     # Players choice
     p1, p2 = map(int, input('Enter indices: ').split(' '))
@@ -40,23 +43,40 @@ while played <= 9:
 
         # Mark the board
         board[p1][p2] = 'X'
-        board[c1][c2] = '0'
+        board[c1][c2] = 'O'
         played += 2
 
-        print(board)
+        rows = ['|'.join(board[r]) for r in range(3)]
+        print('\n-----\n'.join(rows))
 
         for row in range(len(board)):
             if all(cell == 'X' for cell in board[row]):
                 print("Player wins")
+                win = 'X'
+            elif all(cell == 'O' for cell in board[row]):
+                print('Computer wins')
+                win = 'O'
 
         for column in range(len(board[0])):
             if all(board[row][column] == 'X' for row in range(len(board))):
                 print("Player wins")
+                win = 'X'
+            elif all(board[row][column] == 'O' for row in range(len(board))):
+                print('Computer wins')
+                win = 'O'
 
         len_column = len(board[0])
 
         if all(board[i][i] == 'X' for i in range(len_column)):
             print("Player wins")
+            win = 'X'
+        elif all(board[i][i] == 'O' for i in range(len_column)):
+            print('Computer wins')
+            win = 'O'
 
         if all(board[len_column - 1 - i][i] == 'X' for i in range(len_column - 1, -1, -1)):
             print("Player wins")
+            win = 'X'
+        elif all(board[len_column - 1 - i][i] == 'O' for i in range(len_column - 1, -1, -1)):
+            print('Computer wins')
+            win = 'O'
